@@ -7,8 +7,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class TTT extends JFrame {
    // Named-constants for the game board
-   public static final int ROWS = 4;  // ROWS by COLS cells
-   public static final int COLS = 4;
+   public static final int ROWS = 3;  // ROWS by COLS cells
+   public static final int COLS = 3;
  
    // Named-constants of the various dimensions used for graphics drawing
    public static final int CELL_SIZE = 100; // cell width and height (square)
@@ -37,6 +37,11 @@ public class TTT extends JFrame {
    private DrawCanvas canvas; // Drawing canvas (JPanel) for the game board
    private JLabel statusBar;  // Status Bar
  
+   public class gameStage {   // this class is for restoring the game stage and the number of happenings 
+	   String stage;
+	   int numberOfHappenings; 
+   }
+   
    /** Constructor to setup the game and the GUI components */
    public TTT() {
       canvas = new DrawCanvas();  // Construct a drawing canvas (a JPanel)
