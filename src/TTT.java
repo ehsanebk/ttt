@@ -61,7 +61,7 @@ public class TTT extends JFrame {
                      && colSelected < COLS && board[rowSelected][colSelected] == Seed.E) {
                   board[rowSelected][colSelected] = currentPlayer; // Make a move
                   
-               // Part for [puting the data and saving it in a file for later use
+               // Part for puting the data and saving it in a file for later use
                   String currentStage = 
                 		  board[0][0].toString() 
                 		  + board[0][1].toString()
@@ -75,7 +75,7 @@ public class TTT extends JFrame {
                 		  
                 		  				
                   
-                  System.out.println( currentStage );
+                  //System.out.println( currentStage );
                   
                   if ( currentPlayer == Seed.X ){
                 	  stage.setInitialStage ( currentStage );

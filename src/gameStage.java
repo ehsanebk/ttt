@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.util.*;
 
 public class gameStage {
 	 
@@ -36,7 +37,7 @@ public class gameStage {
 				file.createNewFile();
 				FileWriter fw = new FileWriter(file.getAbsoluteFile());
 				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(this.stage+ "\t" + this.numberOfHappenings);
+				bw.write(this.numberOfHappenings + "\t" + this.stage);
 				bw.close();
 				
 			}
@@ -46,31 +47,39 @@ public class gameStage {
 		            BufferedReader br = new BufferedReader(new FileReader("./src/data/" + this.initialStage + ".data"));
 		            String strLine;
 		            StringBuilder fileContent = new StringBuilder();
-		            //Read File Line By Line
 		            
+		            List<String> list = new ArrayList <String>(); // temprary list for storing the stages
+		            
+		            //Read File Line By Line
 		            boolean exist = false; // if the next stage lareaady exist in the data
 		            while ((strLine = br.readLine()) != null) {
 		                // Print the content on the console
-		                System.out.println(strLine);
+		                //System.out.println(strLine);
 		                String tokens[] = strLine.split("\t");
-		                if (tokens[0].equals(this.stage)) {
-		                	this.numberOfHappenings = Integer.parseInt(tokens[1]) + 1 ;
-		                	String newLine = this.stage  + "\t" + this.numberOfHappenings;
-		                	fileContent.append(newLine);
-	                        fileContent.append("\n");
-	                        exist= true;
-		                	
-		                    } else {
-		                        // update content as it is
-		                        fileContent.append(strLine);
-		                        fileContent.append("\n");
-		                    }
 		                
+		                
+		                if (tokens[1].equals(this.stage)) {
+		                	this.numberOfHappenings = Integer.parseInt(tokens[0]) + 1 ;
+		                	String newLine = this.numberOfHappenings + "\t" + this.stage;
+		                	
+		                	list.add(newLine);
+	                        exist= true;
+	                        
+		                	
+		                } else {		                	
+		                	list.add(strLine);
+		                }
 		            }
 		             
 		            if (exist == false){
-		            	fileContent.append(this.stage+ "\t" + this.numberOfHappenings);
-                        fileContent.append("\n");
+		            	list.add(this.numberOfHappenings + "\t" + this.stage);
+		            }
+		            
+		            Collections.sort(list , Collections.reverseOrder());
+		            
+		            for(String val : list ){
+		            	fileContent.append(val);	
+		            	fileContent.append('\n');
 		            }
 		            
 		            // Now fileContent will have updated content , which you can override into file
@@ -79,6 +88,7 @@ public class gameStage {
 		            out.close();
 		            //Close the input stream
 		            br.close();
+		            list.clear();
 		        
 				} catch (Exception e) {//Catch exception if any
 		            System.err.println("Error: " + e.getMessage());
@@ -92,3 +102,5 @@ public class gameStage {
 		
 	}
 }
+
+

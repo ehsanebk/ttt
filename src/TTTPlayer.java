@@ -5,7 +5,7 @@ import javax.swing.*;
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO
  */
 @SuppressWarnings("serial")
-public class TTT extends JFrame {
+public class TTTPlayer extends JFrame {
    // Named-constants for the game board
    public static final int ROWS = 3;  // ROWS by COLS cells
    public static final int COLS = 3;
@@ -41,7 +41,7 @@ public class TTT extends JFrame {
    public gameStage stage;
    
    /** Constructor to setup the game and the GUI components */
-   public TTT() {
+   public TTTPlayer() {
 	  stage = new gameStage();
       canvas = new DrawCanvas();  // Construct a drawing canvas (a JPanel)
       canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
