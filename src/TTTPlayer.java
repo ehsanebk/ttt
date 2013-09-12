@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
+
 /**
  * Tic-Tac-Toe: Two-player Graphics version with Simple-OO
  */
@@ -50,6 +52,7 @@ public class TTTPlayer extends JFrame {
       canvas.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {  // mouse-clicked handler
+        	 
             int mouseX = e.getX();
             int mouseY = e.getY();
             // Get the row and column clicked
@@ -61,7 +64,7 @@ public class TTTPlayer extends JFrame {
                      && colSelected < COLS && board[rowSelected][colSelected] == Seed.E) {
                   board[rowSelected][colSelected] = currentPlayer; // Make a move
                   
-               // Part for [puting the data and saving it in a file for later use
+               // Part for putting the data and saving it in a file for later use
                   String currentStage = 
                 		  board[0][0].toString() 
                 		  + board[0][1].toString()
@@ -72,25 +75,43 @@ public class TTTPlayer extends JFrame {
                 		  + board[2][0].toString()
                 		  + board[2][1].toString()
                 		  + board[2][2].toString();
-                		  
-                		  				
-                  
-                  System.out.println( currentStage );
-                  
-                  if ( currentPlayer == Seed.X ){
+ 
+                  String nextStage = stage.getNextStage(currentStage);
+                  System.out.println( nextStage );
+ 
+                  if ( currentPlayer == Seed.X  && nextStage== null){
                 	  stage.setInitialStage ( currentStage );
                 	  
+                	  updateGame(currentPlayer, rowSelected, colSelected); // update state
+                      // Switch player
+                      currentPlayer = Seed.O ;
                   }
-                  else{
+                  else if ( currentPlayer == Seed.X  && nextStage != null){  // when the program plays 
+                	 
+                	  
+                	  updateGame(currentPlayer, rowSelected, colSelected); // update state
+                      // Switch player
+                      currentPlayer = (currentPlayer == Seed.X) ? Seed.O : Seed.X;
+                      
+                	  for ( int i=0 ; i < currentStage.length(); i++) // Find the actual next move
+                		  if (currentStage.charAt(i) ==  'E' && nextStage.charAt(i) == 'O'){
+                			  rowSelected = (i)/3;
+                			  colSelected = i%3 ;
+                		  }
+                	  
+                	  board[rowSelected][colSelected] = currentPlayer;
+                	  updateGame(currentPlayer, rowSelected, colSelected); // update state
+                	  currentPlayer = Seed.X ;
+                  }
+                  else if ( currentPlayer == Seed.O){
                 	  stage.setStage (currentStage);
-                	  stage.fillTheStageDataBase(); 
-                  }
+                	  stage.fillTheStageDataBase();
+                	  
+                	  updateGame(currentPlayer, rowSelected, colSelected); // update state
+                      // Switch player
+                      currentPlayer = Seed.X;
+                  } 
                   
-                  
-                  
-                  updateGame(currentPlayer, rowSelected, colSelected); // update state
-                  // Switch player
-                  currentPlayer = (currentPlayer == Seed.X) ? Seed.O : Seed.X;
                }
             } else {       // game over
                initGame(); // restart the game
@@ -112,7 +133,7 @@ public class TTTPlayer extends JFrame {
  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       pack();  // pack all the components in this JFrame
-      setTitle("Tic Tac Toe");
+      setTitle("TTT Player");
       setVisible(true);  // show this JFrame
  
       board = new Seed[ROWS][COLS]; // allocate array
@@ -242,7 +263,7 @@ public class TTTPlayer extends JFrame {
       SwingUtilities.invokeLater(new Runnable() {
          @Override
          public void run() {
-            new TTT(); // Let the constructor do the job
+            new TTTPlayer(); // Let the constructor do the job
          }
       });
    }

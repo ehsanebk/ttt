@@ -101,6 +101,31 @@ public class gameStage {
 		}
 		
 	}
+	public String getNextStage(String stage) {
+		
+		String nextStage=null; 
+		File file = new File("./src/data/" + stage + ".data");
+		// if file doesnt exists, then create it
+		if (!file.exists()) {
+			nextStage= null;	
+		}
+		else { 
+			try {
+				// If the file exists we edit the file
+				BufferedReader br = new BufferedReader(new FileReader("./src/data/" + stage + ".data"));
+				String strLine;
+				strLine = br.readLine() ;
+				// Print the content on the console
+				System.out.println(strLine);
+				String tokens[] = strLine.split("\t");
+				nextStage= tokens[1];
+				br.close();
+			} catch (Exception e) {//Catch exception if any
+				System.err.println("Error: " + e.getMessage());   
+			}	
+		}
+		return nextStage;
+	}
 }
 
 

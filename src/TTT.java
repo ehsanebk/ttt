@@ -112,7 +112,7 @@ public class TTT extends JFrame {
  
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       pack();  // pack all the components in this JFrame
-      setTitle("Tic Tac Toe");
+      setTitle("TTT");
       setVisible(true);  // show this JFrame
  
       board = new Seed[ROWS][COLS]; // allocate array
